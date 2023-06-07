@@ -44,5 +44,10 @@ public class TestController {
 	public ResponseEntity<?> update(@RequestBody Test test) throws ResourceNotFoundException {
 		return new ResponseEntity<>(testService.updateTest(test), HttpStatus.OK);
 	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<?>  getById(@PathVariable long id) throws ResourceNotFoundException{
+		return ResponseEntity.ok(testService.getById(id));
+	}
 
 }

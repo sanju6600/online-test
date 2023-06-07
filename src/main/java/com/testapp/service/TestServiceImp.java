@@ -50,4 +50,11 @@ public class TestServiceImp implements TestService {
 		return testDao.findAll();
 	}
 
+	@Override
+	public Test getById(Long testLongId) throws ResourceNotFoundException {
+		
+		return testDao.findById(testLongId).orElseThrow(
+				() -> new ResourceNotFoundException("Requested Test with Id : " + testLongId + " Doesn't Exists"));
+	}
+
 }

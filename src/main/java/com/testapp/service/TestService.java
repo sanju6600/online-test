@@ -24,5 +24,7 @@ public interface TestService {
 	
 	//get test by test name
 	
+	Test getById(Long testLongId) throws ResourceNotFoundException;
+	
 
 }
