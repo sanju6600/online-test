@@ -1,6 +1,7 @@
 package com.testapp.entity;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -30,7 +31,7 @@ public class Test {
 
 	@OneToMany(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "question_fk")
-	private Set<Question> testQustions;
+	private List<Question> testQustions;
 
 	private BigDecimal testTotalMarks;
 
@@ -72,11 +73,11 @@ public class Test {
 		this.testDuration = testDuration;
 	}
 
-	public Set<Question> getTestQustions() {
+	public List<Question> getTestQustions() {
 		return testQustions;
 	}
 
-	public void setTestQustions(Set<Question> testQustions) {
+	public void setTestQustions(List<Question> testQustions) {
 		this.testQustions = testQustions;
 	}
 
@@ -124,7 +125,7 @@ public class Test {
 		super();
 	}
 
-	public Test(Long testId, String testTitle, String testDuration, Set<Question> testQustions,
+	public Test(Long testId, String testTitle, String testDuration, List<Question> testQustions,
 			BigDecimal testTotalMarks, double testMarksScored, Question currentQuestion, String startTime,
 			String endTime) {
 		super();

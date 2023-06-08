@@ -1,6 +1,6 @@
 package com.testapp.entity;
 
-import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Embedded;
@@ -18,7 +18,7 @@ public class Question {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long questionId;
 	@Embedded
-	private List<String> questionOptions;
+	private List<String> questionOptions=new ArrayList<>();
 	private String quesionTitle;
 	private int questionAnswer;
 	private double questionMarks;

@@ -1,5 +1,6 @@
 package com.testapp.service;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public String addQuestion(Question question, Long testId) throws ResourceNotFoundException {
 		Test t = testDao.findById(testId).orElseThrow(() -> new ResourceNotFoundException("Test Not Found"));
-		Set<Question> queList = (Set<Question>) questionDao.findAll();
+		List<Question> queList = questionDao.findAll();
 		queList.add(question);
 		t.setTestQustions(queList);
 		testDao.save(t);
@@ -34,12 +35,14 @@ public class QuestionServiceImpl implements QuestionService {
 	public String updateQuestion(Question question, Long testId, Long qId) throws ResourceNotFoundException {
 
 		Test t = testDao.findById(testId).orElseThrow(() -> new ResourceNotFoundException("Test Not Found"));
-
-		Question q = questionDao.findById(qId)
-				.orElseThrow(() -> new ResourceNotFoundException("Question not Found with Id :" + qId));
-		questionDao.delete(q);
-		Set<Question> queList = (Set<Question>) questionDao.findAll();
-		queList.add(question);
+		List<Question> queList = t.getTestQustions();
+		for (int i = 0; i < queList.size(); i++) {
+			if (queList.get(i).getQuestionId() == qId) {
+				questionDao.delete(queList.get(i));
+				queList.remove(i);
+				queList.add(question);
+			}
+		}
 		t.setTestQustions(queList);
 		testDao.save(t);
 
@@ -52,6 +55,16 @@ public class QuestionServiceImpl implements QuestionService {
 		questionDao.delete(q);
 		return true;
 	}
-	
+
+	@Override
+	public List<Question> getQuestions(Long testId) throws ResourceNotFoundException {
+		Test t=testDao.findById(testId).orElseThrow(()->new ResourceNotFoundException("Test Not Found"));
+		return t.getTestQustions();
+	}
+
+	@Override
+	public Question getQuestionById(Long id) throws ResourceNotFoundException {
+		return questionDao.findById(id).orElseThrow(()->new ResourceNotFoundException("Question doesn't exists")) ;
+	}
 
 }

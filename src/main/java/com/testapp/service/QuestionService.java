@@ -13,5 +13,9 @@ public interface QuestionService {
 	
 	boolean deleteQuestion(Long id) throws ResourceNotFoundException;
 	
+	public List<Question> getQuestions(Long testId) throws ResourceNotFoundException;
+	
+	public Question getQuestionById(Long id) throws ResourceNotFoundException;
+	
 
 }
