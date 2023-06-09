@@ -24,9 +24,9 @@ public class QuestionServiceImpl implements QuestionService {
 	@Override
 	public String addQuestion(Question question, Long testId) throws ResourceNotFoundException {
 		Test t = testDao.findById(testId).orElseThrow(() -> new ResourceNotFoundException("Test Not Found"));
-		List<Question> queList = questionDao.findAll();
-		queList.add(question);
-		t.setTestQustions(queList);
+		List<Question> q=t.getTestQustions();
+		q.add(question);
+		t.setTestQustions(q);
 		testDao.save(t);
 		return "Question added successfully";
 	}
