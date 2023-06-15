@@ -1,9 +1,12 @@
 package com.testapp.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 
@@ -16,19 +19,15 @@ public class User {
 
 	@NotBlank(message = "user name should not be blank or null ")
 	private String userName;
-	private boolean isAdmin;
-	@NotBlank(message = "user password should not be blank or null ")
+	private boolean admin;
+	//@NotBlank(message = "user password should not be blank or null ")
 	private String userPassword;
-
 	
-	public User(long usedid, @NotBlank(message = "user name should not be blank or null ") String userName,
-			boolean isAdmin, @NotBlank(message = "user password should not be blank or null ") String userPassword) {
-		super();
-		this.usedid = usedid;
-		this.userName = userName;
-		this.isAdmin = isAdmin;
-		this.userPassword = userPassword;
-	}
+	private String emailId;
+
+	@OneToOne(cascade = CascadeType.MERGE)
+	@JoinColumn(name = "test_fk")
+	private Test test;
 
 	public User() {
 		super();
@@ -51,11 +50,11 @@ public class User {
 	}
 
 	public boolean isAdmin() {
-		return isAdmin;
+		return admin;
 	}
 
-	public void setAdmin(boolean isAdmin) {
-		this.isAdmin = isAdmin;
+	public void setAdmin(boolean admin) {
+		this.admin = admin;
 	}
 
 	public String getUserPassword() {
@@ -66,10 +65,34 @@ public class User {
 		this.userPassword = userPassword;
 	}
 
-	@Override
-	public String toString() {
-		return "User [usedid=" + usedid + ", userName=" + userName + ", isAdmin=" + isAdmin + ", userPassword="
-				+ userPassword + "]";
+	public String getEmailId() {
+		return emailId;
 	}
+
+	public void setEmailId(String emailId) {
+		this.emailId = emailId;
+	}
+
+	public Test getTest() {
+		return test;
+	}
+
+	public void setTest(Test test) {
+		this.test = test;
+	}
+
+	public User(long usedid, @NotBlank(message = "user name should not be blank or null ") String userName,
+			boolean admin, @NotBlank(message = "user password should not be blank or null ") String userPassword,
+			String emailId, Test test) {
+		super();
+		this.usedid = usedid;
+		this.userName = userName;
+		this.admin = admin;
+		this.userPassword = userPassword;
+		this.emailId = emailId;
+		this.test = test;
+	}
+	
+	
 
 }
